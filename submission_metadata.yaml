@@ -1,0 +1,67 @@
+# Redrob Hackathon — Submission Metadata
+# Team: InnoCoders
+
+team_name: "InnoCoders"
+
+primary_contact:
+  name: "Devansh Wadhwani"
+  email: "devanshwadhwani@example.com"
+  phone: "+91-XXXXXXXXXX"
+
+team_members:
+  - name: "Devansh Wadhwani"
+    email: "devanshwadhwani@example.com"
+    role: "ML Engineer / Solo Submission"
+
+github_repo: "https://github.com/De-Coder05/redrob-ranking-challenge"
+
+sandbox_link: "https://huggingface.co/spaces/De-Coder05/redrob-ranker"
+
+reproduce_command: "python rank.py --candidates ./candidates.jsonl --out ./InnoCoders.csv"
+
+compute:
+  platform: "MacBook Pro (Apple Silicon)"
+  cpu_cores: 8
+  ram_gb: 16
+  python_version: "3.9.6"
+  os: "macOS 25.5.0"
+  uses_gpu_for_inference: false
+  has_network_during_ranking: false
+  pre_computation_required: false
+  pre_computation_time_minutes: 0
+
+ai_tools_used:
+  - "Claude"
+
+ai_usage_summary: |
+  Used Claude (claude-sonnet-4-6) for code review, architectural guidance,
+  and refinement of the scoring logic. No candidate data was fed to any LLM.
+  All scoring is deterministic and runs fully offline.
+
+methodology_summary: |
+  Rule-based ranker with explicit JD-derived scoring and honeypot defense.
+  Five weighted components: Technical Depth (28%, career-description keyword
+  evidence with word-boundary matching, skills cross-validated against career
+  text to catch keyword stuffers, platform assessments), Title Relevance
+  (25%, four-tier taxonomy from ML/NLP/Search/Reco engineer down to
+  non-technical), Career Quality (20%, product-company tenure,
+  consulting-only careers penalised), Experience Fit (17%, YOE curve peaking
+  6-8 yrs, ML title recency, production evidence), Behavioural Availability
+  (10%, open-to-work, activity recency, response rate, notice period,
+  GitHub). Location is a soft multiplier (Pune/Noida highest); JD-stated
+  disqualifiers stack as hard multiplicative penalties. Honeypot defense
+  verifies every profile against itself: role durations contradicting their
+  own start/end dates, expert skills with zero months of use, YOE exceeding
+  career span, and skill durations predating the technology's public release
+  (month-precision dates for 15 modern AI technologies). 141 internally
+  inconsistent profiles detected; zero in the submitted top 100. Reasoning
+  strings are generated per-candidate from profile facts only, with honest
+  concerns and varied phrasing. Deterministic, stdlib-only, ~31 seconds for
+  100K candidates on one CPU core.
+
+declarations:
+  read_submission_spec: true
+  code_is_original_work: true
+  no_collusion: true
+  honeypot_check_done: true
+  reproduction_tested: true
